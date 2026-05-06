@@ -1,0 +1,30 @@
+class Solution:
+    def search(self, nums: List[int], target: int) -> bool:
+        low = 0
+        high = len(nums) - 1
+        
+        while low <= high:
+            mid = (low + high) // 2
+            
+            if nums[mid] == target:
+                return True
+            
+            # Left half is sorted
+            if nums[low] < nums[mid]:
+                # Is target in this sorted left half?
+                if nums[low] <= target < nums[mid]:
+                    high = mid - 1
+                else:
+                    low = mid + 1
+            
+            # Right half is sorted
+            elif nums[low] > nums[mid]:
+                # Is target in this sorted right half?
+                if nums[mid] < target <= nums[high]:
+                    low = mid + 1
+                else:
+                    high = mid - 1
+            else:
+                low += 1
+        
+        return False 
